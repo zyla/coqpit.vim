@@ -17,7 +17,7 @@ function! coqpit#goals#xml2strs(goals)
 
   let res = []
 
-  let res += [nr_subgoals .. ' subgoal' .. plural]
+  let res += [nr_subgoals . ' subgoal' . plural]
 
   for idx in range(nr_subgoals)
     let goal = list[idx]
@@ -29,7 +29,7 @@ function! coqpit#goals#xml2strs(goals)
       let res += coqpit#goals#hyps2strs(hyps)
     endif
 
-    let res += ['______________________________________(' .. (idx + 1) .. '/' .. nr_subgoals .. ')']
+    let res += ['______________________________________(' . (idx + 1) . '/' . nr_subgoals . ')']
     let res += split(ccl, "\n")
   endfor
 
@@ -58,7 +58,7 @@ function! s:unfocused2strs(goals)
     " let hyps = map(goal.child[1].child, 'coqpit#xml#2str(v:val)')
     let ccl = coqpit#xml#2str(goal.child[2])
 
-    let res += ['______________________________________(' .. (idx + 1) .. '/' .. nr_unfocused .. ')']
+    let res += ['______________________________________(' . (idx + 1) . '/' . nr_unfocused . ')']
     let res += split(ccl, "\n")
   endfor
 

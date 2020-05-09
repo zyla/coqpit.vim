@@ -16,15 +16,15 @@ let s:IDE_instances = []
 let s:num = 0
 
 function! s:name_buffer_unique(name) abort
-  if !bufexists('[' .. a:name .. ']')
-    silent exe 'file [' .. a:name .. ']'
+  if !bufexists('[' . a:name . ']')
+    silent exe 'file [' . a:name . ']'
     return
   endif
 
-  while bufexists('[' .. a:name .. '_' .. s:num .. ']')
+  while bufexists('[' . a:name . '_' . s:num . ']')
     let s:num += 1
   endwhile
-  silent exe 'file [' .. a:name .. '_' .. s:num .. ']'
+  silent exe 'file [' . a:name . '_' . s:num . ']'
 endfunction
 
 " reset_pannels(force = 0) {{{
@@ -59,8 +59,8 @@ function! coqpit#init_tablocal_windows(force) abort
   if exists('t:coqpit_info_bufnr') && !bufexists(t:coqpit_info_bufnr) | silent! unlet t:coqpit_info_bufnr | endif
 
   if !exists('t:coqpit_goal_bufnr') || !exists('t:coqpit_info_bufnr') || a:force
-    if exists('t:coqpit_goal_bufnr') | silent! execute 'bwipeout' .. t:coqpit_goal_bufnr | endif
-    if exists('t:coqpit_info_bufnr') | silent! execute 'bwipeout' .. t:coqpit_info_bufnr | endif
+    if exists('t:coqpit_goal_bufnr') | silent! execute 'bwipeout' . t:coqpit_goal_bufnr | endif
+    if exists('t:coqpit_info_bufnr') | silent! execute 'bwipeout' . t:coqpit_info_bufnr | endif
     silent! unlet t:coqpit_goal_bufnr
     silent! unlet t:coqpit_info_bufnr
   endif
@@ -88,7 +88,7 @@ function! coqpit#init_tablocal_windows(force) abort
     setlocal nocursorcolumn
     let t:coqpit_info_bufnr = bufnr('%')
     call add(s:window_bufnrs, t:coqpit_info_bufnr)
-  execute l:winnr .. 'winc w'
+  execute l:winnr . 'winc w'
 endfunction
 " }}}
 
@@ -100,8 +100,8 @@ function! coqpit#init_buflocal_windows(force) abort
   if exists('b:coqpit_info_bufnr') && !bufexists(b:coqpit_info_bufnr) | silent! unlet b:coqpit_info_bufnr | endif
 
   if !exists('b:coqpit_goal_bufnr') || !exists('b:coqpit_info_bufnr') || a:force
-    if exists('b:coqpit_goal_bufnr') | silent! execute 'bwipeout' .. b:coqpit_goal_bufnr | endif
-    if exists('b:coqpit_info_bufnr') | silent! execute 'bwipeout' .. b:coqpit_info_bufnr | endif
+    if exists('b:coqpit_goal_bufnr') | silent! execute 'bwipeout' . b:coqpit_goal_bufnr | endif
+    if exists('b:coqpit_info_bufnr') | silent! execute 'bwipeout' . b:coqpit_info_bufnr | endif
     silent! unlet b:coqpit_goal_bufnr
     silent! unlet b:coqpit_info_bufnr
   endif
@@ -117,7 +117,7 @@ function! coqpit#init_buflocal_windows(force) abort
 
   rightbelow vnew
     setlocal buftype=nofile
-    call s:name_buffer_unique('Goals:' .. fname)
+    call s:name_buffer_unique('Goals:' . fname)
     setlocal filetype=coq-goals
     setlocal filetype=coq-goals
     setlocal noswapfile
@@ -129,7 +129,7 @@ function! coqpit#init_buflocal_windows(force) abort
     call add(s:window_bufnrs, l:coqpit_goal_bufnr)
   rightbelow new
     setlocal buftype=nofile
-    call s:name_buffer_unique('Infos:' .. fname)
+    call s:name_buffer_unique('Infos:' . fname)
     setlocal filetype=coq-infos
     setlocal noswapfile
     setlocal nocursorline
@@ -138,7 +138,7 @@ function! coqpit#init_buflocal_windows(force) abort
     call coqpit#define_buffer_commands()
     let l:coqpit_info_bufnr = bufnr('%')
     call add(s:window_bufnrs, l:coqpit_info_bufnr)
-  execute l:winnr .. 'winc w'
+  execute l:winnr . 'winc w'
 
   for bufnr in [l:coqpit_goal_bufnr, l:coqpit_info_bufnr]
     call setbufvar(bufnr, 'coqpit_goal_bufnr', l:coqpit_goal_bufnr)
@@ -154,8 +154,8 @@ function! coqpit#stop()
   if !exists('b:coqpitIDE') | return | endif
 
   if !g:coqpit#options#get('one_window')
-    if exists('b:coqpit_goal_bufnr') | silent! execute 'bwipeout' .. b:coqpit_goal_bufnr | endif
-    if exists('b:coqpit_info_bufnr') | silent! execute 'bwipeout' .. b:coqpit_info_bufnr | endif
+    if exists('b:coqpit_goal_bufnr') | silent! execute 'bwipeout' . b:coqpit_goal_bufnr | endif
+    if exists('b:coqpit_info_bufnr') | silent! execute 'bwipeout' . b:coqpit_info_bufnr | endif
   endif
 
   if exists('b:coqpitIDE')
@@ -172,7 +172,7 @@ function! coqpit#stop_all()
 
   for bufnr in s:window_bufnrs
     if bufexists(bufnr)
-      silent! execute 'bwipeout' .. bufnr
+      silent! execute 'bwipeout' . bufnr
     endif
   endfor
 

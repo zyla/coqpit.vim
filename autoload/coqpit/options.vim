@@ -14,8 +14,8 @@ function! s:config(name, ...) abort
   call s:end()
 
   if !l:no_define_default
-    if !exists('g:coqpit_' .. a:name)
-      let g:['coqpit_' .. a:name] = l:default
+    if !exists('g:coqpit_' . a:name)
+      let g:['coqpit_' . a:name] = l:default
     endif
   endif
 
@@ -31,8 +31,8 @@ function! s:config(name, ...) abort
     call s:end()
 
     for scope in l:scopes
-      if exists(scope .. ':coqpit_' .. a:name)
-        return eval(scope .. ':coqpit_' .. a:name)
+      if exists(scope . ':coqpit_' . a:name)
+        return eval(scope . ':coqpit_' . a:name)
       endif
     endfor
     if l:default2 isnot v:null
@@ -62,13 +62,13 @@ function coqpit#options#set(name, ...)
   endif
 
   if !has_key(s:getters, a:name)
-    throw 'Invalid option name "' .. a:name .. '"'
+    throw 'Invalid option name "' . a:name . '"'
   endif
 
   let l:scopes = s:getters[a:name].scopes
   if index(l:scopes, l:scope) == -1
-    throw 'Unexpected scope "' .. l:scope .. '". ' ..
-          \ 'Use one of [' .. join(l:scopes, ', ') .. ']'
+    throw 'Unexpected scope "' . l:scope . '". ' ..
+          \ 'Use one of [' . join(l:scopes, ', ') . ']'
   endif
 
   if l:value is v:null
@@ -78,17 +78,17 @@ function coqpit#options#set(name, ...)
   if s:getters[a:name].candidates isnot 0
     if type(l:value) != v:t_string
       throw 'Invalid type of option value. ' ..
-            \ 'Option ' .. a:name .. ' only accepts string values.'
+            \ 'Option ' . a:name . ' only accepts string values.'
     endif
     let l:cand = s:getters[a:name].candidates
     if index(l:cand, l:value) == -1
-      throw 'Invalid option value "' .. l:value .. '". ' ..
-            \ 'Set one of [' .. join(l:cand, ', ') .. ']'
+      throw 'Invalid option value "' . l:value . '". ' ..
+            \ 'Set one of [' . join(l:cand, ', ') . ']'
     endif
   endif
 
-  exe 'let l:dict = ' .. l:scope .. ':'
-  let l:dict['coqpit_' .. a:name] = l:value
+  exe 'let l:dict = ' . l:scope . ':'
+  let l:dict['coqpit_' . a:name] = l:value
 endfunction
 
 

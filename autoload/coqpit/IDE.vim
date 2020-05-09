@@ -372,20 +372,20 @@ function! s:IDE._register_buffer(bufnr) abort
   let self.handling_bufnr = a:bufnr
   let self.unfocused = !self.focusing()
 
-  exe 'augroup coqpit_buffer_events_' .. a:bufnr
+  exe 'augroup coqpit_buffer_events_' . a:bufnr
     au!
-    exe 'au TextChanged  <buffer=' .. a:bufnr .. '> call <SID>getIDE_by_bufnr(' .. a:bufnr .. ')._after_textchange()'
-    exe 'au TextChangedI <buffer=' .. a:bufnr .. '> call <SID>getIDE_by_bufnr(' .. a:bufnr .. ')._after_textchange()'
-    exe 'au TextChangedP <buffer=' .. a:bufnr .. '> call <SID>getIDE_by_bufnr(' .. a:bufnr .. ')._after_textchange()'
+    exe 'au TextChanged  <buffer=' . a:bufnr . '> call <SID>getIDE_by_bufnr(' . a:bufnr . ')._after_textchange()'
+    exe 'au TextChangedI <buffer=' . a:bufnr . '> call <SID>getIDE_by_bufnr(' . a:bufnr . ')._after_textchange()'
+    exe 'au TextChangedP <buffer=' . a:bufnr . '> call <SID>getIDE_by_bufnr(' . a:bufnr . ')._after_textchange()'
 
     " :buffer to <this buffer>
-    exe 'au BufEnter     <buffer=' .. a:bufnr .. '> call <SID>getIDE_by_bufnr(' .. a:bufnr .. ')._after_bufenter()'
+    exe 'au BufEnter     <buffer=' . a:bufnr . '> call <SID>getIDE_by_bufnr(' . a:bufnr . ')._after_bufenter()'
     " :buffer to <another buffer>
-    exe 'au BufEnter     * call <SID>getIDE_by_bufnr(' .. a:bufnr .. ')._after_bufenter()'
+    exe 'au BufEnter     * call <SID>getIDE_by_bufnr(' . a:bufnr . ')._after_bufenter()'
     " :split, :new, :tabnew, :tabp to <this buffer>
-    exe 'au WinEnter     <buffer=' .. a:bufnr .. '> call <SID>getIDE_by_bufnr(' .. a:bufnr .. ')._after_bufenter()'
+    exe 'au WinEnter     <buffer=' . a:bufnr . '> call <SID>getIDE_by_bufnr(' . a:bufnr . ')._after_bufenter()'
     " :split, :new, :tabnew, :tabp to <another buffer>
-    exe 'au WinEnter     * call <SID>getIDE_by_bufnr(' .. a:bufnr .. ')._after_bufenter()'
+    exe 'au WinEnter     * call <SID>getIDE_by_bufnr(' . a:bufnr . ')._after_bufenter()'
   augroup END
 endfunction
 " }}}

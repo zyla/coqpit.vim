@@ -71,9 +71,9 @@ function! s:CoqTopHandler._make_restart_next(args) abort
     if a:cmd is v:null
       echoerr '[coqpit.vim / CoqTop Handler] Not found executable CoqTop with following error messages.'
       for i in range(len(a:data[0]))
-        echoerr '[' .. (i + 1) .. ': Command tried ] ' .. string(a:data[0][i])
+        echoerr '[' . (i + 1) . ': Command tried ] ' . string(a:data[0][i])
         if has_key(a:data[1], i)
-          echoerr '[' .. (i + 1) .. ': Error message ] ' .. a:data[1][i]
+          echoerr '[' . (i + 1) . ': Error message ] ' . a:data[1][i]
         endif
       endfor
       return
@@ -82,7 +82,7 @@ function! s:CoqTopHandler._make_restart_next(args) abort
     let self.coq_version = a:data
 
     if !g:coqpit#options#get('silent') >= 1
-      echo '[coqpit.vim / CoqTop Handler] CoqTop version ' .. self.coq_version .. ' started running.'
+      echo '[coqpit.vim / CoqTop Handler] CoqTop version ' . self.coq_version . ' started running.'
     endif
 
     let job_options = {}
@@ -99,8 +99,8 @@ function! s:CoqTopHandler._make_restart_next(args) abort
     if !self.running()
       echoerr
         \ '[coqpit.vim / CoqTop Handler] Tried to start with '
-        \ .. string(a:cmd)
-        \ .. ' , but failed.'
+        \ . string(a:cmd)
+        \ . ' , but failed.'
       return
     endif
 
@@ -178,8 +178,8 @@ function! s:CoqTopHandler._exit_cb(status) abort
   if self.expected_running
     let self.expected_running = 0
     echoerr '[coqpit.vim / CoqTop Handler] Unfortunately, CoqTop was exited with status '
-          \ .. a:status
-          \ .. '. Handler will try to restart.'
+          \ . a:status
+          \ . '. Handler will try to restart.'
     call self.restart()
     call self.after_unexpected_exit()
   endif
@@ -236,7 +236,7 @@ function! s:CoqTopHandler._check_call_queue() abort
 
   let self.waiting = l:Callback
   let self.is_status = l:is_status
-  call s:ch_sendraw(self.job, msg .. "\n")
+  call s:ch_sendraw(self.job, msg . "\n")
 endfunction
 
 function! s:CoqTopHandler.interrupt() abort
@@ -347,11 +347,11 @@ function! s:CoqTopHandler.send_sentence(sentence, ...) abort
     \<call val="Add">
       \<pair>
         \<pair>
-          \<string>' .. coqpit#xml#escape(a:sentence) .. '</string>
+          \<string>' . coqpit#xml#escape(a:sentence) . '</string>
           \<int>-1</int>
         \</pair>
         \<pair>
-          \<state_id val="' .. state_id .. '" />
+          \<state_id val="' . state_id . '" />
           \<bool val="false" />
         \</pair>
       \</pair>
@@ -439,7 +439,7 @@ function! s:CoqTopHandler.edit_at(new_state_id, ...) abort
   call s:end()
 
   call self._call({->
-    \ '<call val="Edit_at"><state_id val="' .. a:new_state_id .. '" /></call>'
+    \ '<call val="Edit_at"><state_id val="' . a:new_state_id . '" /></call>'
     \ }, self._make_edit_at_callback(a:new_state_id, l:Callback))
 endfunction
 function! s:CoqTopHandler._make_edit_at_callback(new_state_id, callback) abort
@@ -466,7 +466,7 @@ function! s:CoqTopHandler.annotate(code, ...) abort
   call s:end()
 
   call self._call({->
-    \ '<call val="Annotate"><string>' .. coqpit#xml#escape(a:code) .. '</string></call>'
+    \ '<call val="Annotate"><string>' . coqpit#xml#escape(a:code) . '</string></call>'
     \ }, self._make_after_annotate(l:Callback))
 endfunction
 function! s:CoqTopHandler._make_after_annotate(callback) abort
@@ -488,7 +488,7 @@ function! s:CoqTopHandler.status(...) abort
   call s:end()
 
   call self._call({->
-    \ '<call val="Status"><bool val="' .. (l:force ? 'true' : 'false') .. '"></bool></call>'
+    \ '<call val="Status"><bool val="' . (l:force ? 'true' : 'false') . '"></bool></call>'
     \ }, self._make_after_status(l:Callback), 1)
 endfunction
 function! s:CoqTopHandler._make_after_status(callback) abort
@@ -513,10 +513,10 @@ function! s:CoqTopHandler.query(query_str, ...) abort
   call self._call({state_id -> '
     \<call val="Query">
       \<pair>
-        \<route_id val="' .. route_id .. '" />
+        \<route_id val="' . route_id . '" />
         \<pair>
-          \<string>' .. coqpit#xml#escape(a:query_str) .. '</string>
-          \<state_id val="' .. state_id .. '" />
+          \<string>' . coqpit#xml#escape(a:query_str) . '</string>
+          \<state_id val="' . state_id . '" />
         \</pair>
       \</pair>
     \</call>

@@ -6,7 +6,7 @@ function! coqpit#xml#2str(xml) abort
 
   let res = ''
   for el in a:xml.child
-    let res ..= coqpit#xml#2str(el)
+    let res .= coqpit#xml#2str(el)
   endfor
 
   return res

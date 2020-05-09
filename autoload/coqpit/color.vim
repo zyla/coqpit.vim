@@ -7,13 +7,13 @@ function! coqpit#color#defineColorScheme() abort
   let coq_queued_bg  = s:toString(s:col_mult(bg_tup, [1.2, 1.8, 1.2]))
   " let coq_checked_warn_bg       = s:toString(s:col_mult(bg_tup, [3, 2, 1]))
 
-  exe 'hi default CoqChecked      ctermbg=20  guibg=' .. coq_checked_bg
-  exe 'hi default CoqCheckedAxiom ctermbg=172 guibg=' .. coq_checked_axiom_bg
-  exe 'hi default CoqQueued       ctermbg=40  guibg=' .. coq_queued_bg
+  exe 'hi default CoqChecked      ctermbg=20  guibg=' . coq_checked_bg
+  exe 'hi default CoqCheckedAxiom ctermbg=172 guibg=' . coq_checked_axiom_bg
+  exe 'hi default CoqQueued       ctermbg=40  guibg=' . coq_queued_bg
   exe 'hi default CoqMarkedWarn   ctermbg=184 gui=undercurl guisp=Yellow'
-  exe 'hi default CoqCheckedWarn  ctermbg=184 gui=undercurl guisp=Yellow guibg=' .. coq_checked_bg
+  exe 'hi default CoqCheckedWarn  ctermbg=184 gui=undercurl guisp=Yellow guibg=' . coq_checked_bg
   exe 'hi default CoqMarkedError  ctermbg=160 gui=undercurl guisp=Red'
-  exe 'hi default CoqCheckedError ctermbg=160 gui=undercurl guisp=Red guibg=' .. coq_checked_bg
+  exe 'hi default CoqCheckedError ctermbg=160 gui=undercurl guisp=Red guibg=' . coq_checked_bg
 endfunction
 
 
@@ -28,7 +28,7 @@ endfunction
 
 " tuple to string
 function! s:toString(tup) abort
-  return '#' .. printf('%02x', a:tup[0]) .. printf('%02x', a:tup[1]) .. printf('%02x', a:tup[2])
+  return '#' . printf('%02x', a:tup[0]) . printf('%02x', a:tup[1]) . printf('%02x', a:tup[2])
 endfunction
 
 
